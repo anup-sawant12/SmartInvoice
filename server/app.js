@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import authRouter from "./routes/authRoutes.js";
+import shopRouter from "./routes/shopRoutes.js";
+import productRouter from "./routes/productRoutes.js";
 
 const app = express();
 
@@ -8,7 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth',authRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/shop', shopRouter);
+app.use("/api/products", productRouter);
 
 // test route
 app.get("/", (req, res) => {

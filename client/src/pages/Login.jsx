@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { login } from "../services/authService.js";
-import { useAuth } from "../context/authContex.jsx";
-
-
+import { useNavigate, Link } from "react-router-dom";
+import { login } from "../services/authService";
+import { useAuth } from "../context/authContex";
+import toast from "react-hot-toast";
 
 const Login = () => {
-
-     const { login: saveToken } = useAuth();
-
-
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const { login: saveToken } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -23,22 +21,22 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const res = await login(formData);
+    try {
+      const res = await login(formData);
 
-    console.log(res.data);
+      saveToken(res.data.data.token);
 
-   saveToken(res.data.data.token);
+      toast.success("Login successful!");
 
-    alert("Login Successful!");
-  } catch (error) {
-    console.error(error.response?.data || error.message);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error.response?.data || error.message);
 
-    alert(error.response?.data?.message || "Login Failed");
-  }
-};
+      alert(error.response?.data?.message || "Login Failed");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -79,9 +77,12 @@ const Login = () => {
 
         <p className="text-center mt-4">
           Don't have an account?{" "}
-          <a href="/" className="text-blue-600 font-medium">
+          <Link
+            to="/"
+            className="text-blue-600 font-medium hover:underline"
+          >
             Register
-          </a>
+          </Link>
         </p>
       </form>
     </div>

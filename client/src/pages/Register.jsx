@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { register } from "../services/authService.js";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../services/authService";
+import toast from "react-hot-toast";
+
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,18 +20,21 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const res = await register(formData);
+    try {
+      const res = await register(formData);
 
-    console.log(res.data);
-    alert("Registration Successful!");
-  } catch (error) {
-    console.error(error.response?.data || error.message);
-    alert(error.response?.data?.message || "Registration Failed");
-  }
-};
+      console.log(res.data);
+      toast.success("Registration successful!");
+
+      navigate("/login");
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+
+    toast.error(error.response?.data?.message || "Registration Failed");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -45,6 +53,7 @@ const Register = () => {
           value={formData.name}
           onChange={handleChange}
           className="w-full border p-3 rounded mb-4"
+          required
         />
 
         <input
@@ -54,6 +63,7 @@ const Register = () => {
           value={formData.email}
           onChange={handleChange}
           className="w-full border p-3 rounded mb-4"
+          required
         />
 
         <input
@@ -63,20 +73,24 @@ const Register = () => {
           value={formData.password}
           onChange={handleChange}
           className="w-full border p-3 rounded mb-6"
+          required
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded"
+          className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition"
         >
           Register
         </button>
 
-         <p className="text-center mt-4">
-          Already have account?{" "}
-          <a href="/login" className="text-blue-600 font-medium">
+        <p className="text-center mt-4">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-blue-600 font-medium hover:underline"
+          >
             Login
-          </a>
+          </Link>
         </p>
       </form>
     </div>

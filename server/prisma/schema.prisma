@@ -70,6 +70,7 @@ model Bill {
   customerMobile  String?
 
   billDate        DateTime @default(now())
+  discount Decimal @default(0.00) @db.Decimal(10,2)
 
   subtotal        Decimal  @db.Decimal(10,2)
   gst             Decimal  @default(0.00) @db.Decimal(10,2)
@@ -100,6 +101,7 @@ model BillItem {
   price     Decimal @db.Decimal(10,2)
 
   total     Decimal @db.Decimal(10,2)
+  productName String
 
   // Foreign Keys
   billId    String

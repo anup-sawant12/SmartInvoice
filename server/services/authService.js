@@ -53,7 +53,7 @@ export const loginUser=async (userData)=>{
   })
 
   if(!user){
-    throw new error ("User doesn't exists")
+    throw new Error("User does not exist")
   }
 
   //compare password
