@@ -8,7 +8,7 @@ import {
 
 export const create = async (req, res) => {
   try {
-    const product = await createProduct(req.body, req.user.id);
+    const product = await createProduct(req.body, req.user.userId);
 
     res.status(201).json({
       success: true,
@@ -25,7 +25,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const products = await getProducts(req.user.id);
+    const products = await getProducts(req.user.userId);
 
     res.status(200).json({
       success: true,
@@ -41,7 +41,7 @@ export const getAll = async (req, res) => {
 
 export const getById = async (req, res) => {
   try {
-    const product = await getProductById(req.params.id, req.user.id);
+    const product = await getProductById(req.params.id, req.user.userId);
 
     res.status(200).json({
       success: true,
@@ -60,7 +60,7 @@ export const update = async (req, res) => {
     const product = await updateProduct(
       req.params.id,
       req.body,
-      req.user.id
+      req.user.userId
     );
 
     res.status(200).json({
@@ -78,7 +78,7 @@ export const update = async (req, res) => {
 
 export const remove = async (req, res) => {
   try {
-    const result = await deleteProduct(req.params.id, req.user.id);
+    const result = await deleteProduct(req.params.id, req.user.userId);
 
     res.status(200).json({
       success: true,

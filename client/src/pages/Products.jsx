@@ -1,64 +1,136 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+import ProductForm from "../components/products/productForm";
+import ProductTable from "../components/products/productTable";
+
+import {
+  createProduct,
+  getProducts,
+  updateProduct,
+  deleteProduct,
+} from "../services/productService";
 
 const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const [editing, setEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+
   const [formData, setFormData] = useState({
     name: "",
     category: "",
     price: "",
   });
 
+  const fetchProducts = async () => {
+    try {
+      const res = await getProducts();
+      setProducts(res.data);
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Failed to fetch products"
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (editing) {
+        await updateProduct(editingId, formData);
+        toast.success("Product Updated Successfully");
+      } else {
+        await createProduct(formData);
+        toast.success("Product Added Successfully");
+      }
+
+      setFormData({
+        name: "",
+        category: "",
+        price: "",
+      });
+
+      setEditing(false);
+      setEditingId(null);
+
+      fetchProducts();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
+  };
+
+  const handleEdit = (product) => {
+    setEditing(true);
+    setEditingId(product.id);
+
+    setFormData({
+      name: product.name,
+      category: product.category || "",
+      price: product.price,
+    });
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteProduct(id);
+
+      toast.success("Product Deleted Successfully");
+
+      fetchProducts();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Failed to delete product"
+      );
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditing(false);
+    setEditingId(null);
+
+    setFormData({
+      name: "",
+      category: "",
+      price: "",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-8">Product Management</h1>
+      <h1 className="text-3xl font-bold mb-8">
+        Product Management
+      </h1>
 
-      <div className="bg-white p-6 rounded-lg shadow mb-8">
-        <h2 className="text-xl font-semibold mb-4">Add Product</h2>
+      <ProductForm
+        formData={formData}
+        setFormData={setFormData}
+        handleSubmit={handleSubmit}
+        editing={editing}
+        cancelEdit={cancelEdit}
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
-            type="text"
-            placeholder="Product Name"
-            className="border rounded-lg p-3"
-          />
-
-          <input
-            type="text"
-            placeholder="Category"
-            className="border rounded-lg p-3"
-          />
-
-          <input
-            type="number"
-            placeholder="Price per Kg"
-            className="border rounded-lg p-3"
-          />
-        </div>
-
-        <button className="mt-5 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-          Add Product
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="p-3">Name</th>
-              <th className="p-3">Category</th>
-              <th className="p-3">Price (₹/kg)</th>
-              <th className="p-3">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td className="p-3 text-center" colSpan="4">
-                No products found.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <ProductTable
+        products={products}
+        search={search}
+        setSearch={setSearch}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
