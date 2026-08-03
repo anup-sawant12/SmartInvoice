@@ -144,3 +144,23 @@ export const deleteBill = async (billId, userId) => {
     message: "Invoice deleted successfully",
   };
 };
+
+export const getNextInvoiceNumber = async (userId) => {
+  const shop = await prisma.shop.findUnique({
+    where: {
+      userId,
+    },
+  });
+
+  if (!shop) {
+    throw new Error("Shop not found");
+  }
+
+  const count = await prisma.bill.count({
+    where: {
+      shopId: shop.id,
+    },
+  });
+
+  return `INV-${String(count + 1).padStart(4, "0")}`;
+};

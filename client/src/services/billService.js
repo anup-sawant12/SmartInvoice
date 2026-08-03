@@ -43,3 +43,13 @@ export const deleteBill = async (id) => {
 
   return response.data;
 };
+
+export const getNextInvoiceNumber = async () => {
+  const response = await axios.get(`${API}/next-number`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  return response.data;
+};

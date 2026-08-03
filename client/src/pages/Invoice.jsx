@@ -7,13 +7,15 @@ import ProductSearch from "../components/invoice/ProductSearch";
 import BillItemsTable from "../components/invoice/BillItemsTable";
 import InvoiceSummary from "../components/invoice/InvoiceSummary";
 import InvoicePreview from "../components/invoice/InvoicePreview";
-import { createBill } from "../services/billService";
+import { createBill, getNextInvoiceNumber } from "../services/billService";
 import { getShop } from "../services/shopService";
+import { generateInvoicePDF } from "../utils/pdfGenerator";
 
 const Invoice = () => {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const [shop, setShop] = useState(null);
+  const [nextInvoiceNumber, setNextInvoiceNumber] = useState("");
   const [invoice, setInvoice] = useState({
     customerName: "",
     customerMobile: "",
@@ -25,15 +27,19 @@ const Invoice = () => {
   });
 
   useEffect(() => {
-    const fetchShop = async () => {
+    const fetchLoadData = async () => {
       try {
-        const res = await getShop();
-        setShop(res.data);
+        const [shopRes, numRes] = await Promise.all([
+          getShop(),
+          getNextInvoiceNumber(),
+        ]);
+        setShop(shopRes.data);
+        setNextInvoiceNumber(numRes.data);
       } catch (err) {
-        console.error("Error fetching shop details:", err);
+        console.error("Error loading invoice page data:", err);
       }
     };
-    fetchShop();
+    fetchLoadData();
   }, []);
 
   const handleSave = async () => {
@@ -44,8 +50,14 @@ const Invoice = () => {
 
     setIsSaving(true);
     try {
-      await createBill(invoice);
+      const response = await createBill(invoice);
+      const savedBill = response.data;
+      
       toast.success("Invoice created successfully!");
+      
+      // Generate and download the PDF
+      generateInvoicePDF(savedBill, shop);
+
       // Reset form
       setInvoice({
         customerName: "",
@@ -109,7 +121,9 @@ const Invoice = () => {
           <InvoicePreview 
             invoice={invoice} 
             shop={shop}
+            invoiceNumber={nextInvoiceNumber}
             onSave={handleSave} 
+            onPrint={handleSave}
             isSaving={isSaving} 
           />
         </div>

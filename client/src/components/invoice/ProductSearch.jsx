@@ -33,7 +33,7 @@ const ProductSearch = ({ invoice, setInvoice }) => {
 
     const product = selectedProduct.product;
 
-    const total = (Number(product.price) * Number(quantity)) / 1000;
+    const total = Number(product.price) * Number(quantity);
 
     const existingIndex = invoice.items.findIndex(
       (item) => item.productId === product.id
@@ -47,9 +47,8 @@ const ProductSearch = ({ invoice, setInvoice }) => {
       updatedItems[existingIndex].quantity += Number(quantity);
 
       updatedItems[existingIndex].total =
-        (updatedItems[existingIndex].price *
-          updatedItems[existingIndex].quantity) /
-        1000;
+        updatedItems[existingIndex].price *
+        updatedItems[existingIndex].quantity;
     } else {
       updatedItems = [
         ...invoice.items,
@@ -94,7 +93,8 @@ const ProductSearch = ({ invoice, setInvoice }) => {
 
         <input
           type="number"
-          placeholder="Quantity (grams)"
+          step="any"
+          placeholder="Quantity (kg)"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           className="w-full border rounded-lg p-3"

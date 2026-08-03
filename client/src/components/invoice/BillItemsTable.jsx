@@ -23,7 +23,7 @@ const BillItemsTable = ({ invoice, setInvoice }) => {
           <thead className="bg-blue-600 text-white">
             <tr>
               <th className="p-3">Product</th>
-              <th className="p-3">Qty (g)</th>
+              <th className="p-3">Qty (kg)</th>
               <th className="p-3">Rate/kg</th>
               <th className="p-3">Total</th>
               <th className="p-3">Action</th>

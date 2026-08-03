@@ -3,6 +3,7 @@ import {
   getBills,
   getBillById,
   deleteBill,
+  getNextInvoiceNumber,
 } from "../services/billService.js";
 
 export const create = async (req, res) => {
@@ -61,6 +62,22 @@ export const remove = async (req, res) => {
     res.status(200).json({
       success: true,
       message: result.message,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getNextNumber = async (req, res) => {
+  try {
+    const nextNumber = await getNextInvoiceNumber(req.user.userId);
+
+    res.status(200).json({
+      success: true,
+      data: nextNumber,
     });
   } catch (error) {
     res.status(400).json({
