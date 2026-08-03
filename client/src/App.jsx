@@ -5,6 +5,7 @@ import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Shop from "./pages/Shop.jsx";
 import Products from "./pages/Products";
+import Invoice from "./pages/Invoice";
 
 import ProtectedRoute from "./routes/protectRoute.jsx";
 
@@ -37,6 +38,15 @@ function App() {
   element={
     <ProtectedRoute>
       <Products />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/invoice"
+  element={
+    <ProtectedRoute>
+      <Invoice />
     </ProtectedRoute>
   }
 />

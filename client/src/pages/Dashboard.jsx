@@ -39,6 +39,14 @@ const Dashboard = () => {
 >
   Products
 </button>
+
+<button
+  onClick={() => navigate("/invoice")}
+  className="bg-yellow-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+>
+  Create Invoice
+</button>
+
       </div>
     </div>
   );
