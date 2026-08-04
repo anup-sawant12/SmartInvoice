@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createShop, getShop, updateShop } from "../services/shopService";
+import toast from "react-hot-toast";
 
 const Shop = () => {
   const [formData, setFormData] = useState({
@@ -46,14 +47,14 @@ const Shop = () => {
 
       if (isEdit) {
         await updateShop(data);
-        alert("Shop updated successfully");
+        toast.success("Shop updated successfully");
       } else {
         await createShop(data);
-        alert("Shop created successfully");
+        toast.success("Shop created successfully");
         setIsEdit(true);
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong");
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
 
