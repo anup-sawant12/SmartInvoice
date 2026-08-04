@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "https://smart-invoice-server.vercel.app/";
+const API = (import.meta.env.VITE_API_URL || "http://localhost:5000/api") + "/products";
 
 const getToken = () => localStorage.getItem("token");
 
