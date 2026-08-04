@@ -21,7 +21,7 @@ const SalesOverview = () => {
         </div>
         <p className="text-sm font-semibold text-neutral-700">Analytics Chart Placeholder</p>
         <p className="text-xs text-neutral-400 mt-1 max-w-[240px]">
-          Once more billing data is collected, interactive charts will display your sales trends.
+          under maintenance
         </p>
       </div>
     </div>
