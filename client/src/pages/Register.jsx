@@ -91,7 +91,7 @@ const Register = () => {
           id="name"
           name="name"
           type="text"
-          placeholder="John Doe"
+          placeholder="Anup Sawant"
           value={formData.name}
           onChange={handleChange}
           error={errors.name}
