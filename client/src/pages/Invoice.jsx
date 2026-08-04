@@ -79,54 +79,57 @@ const Invoice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-neutral-800 tracking-tight">
             Create Invoice
           </h1>
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition"
-          >
-            Back to Dashboard
-          </button>
+          <p className="text-neutral-500 mt-1 text-sm">
+            Generate new billing invoices and receipts for customers.
+          </p>
         </div>
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="px-4 py-2 border border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-700 rounded-xl font-semibold text-sm transition-all shadow-sm w-fit"
+        >
+          Back to Dashboard
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left */}
-          <div className="space-y-6">
-            <CustomerForm
-              invoice={invoice}
-              setInvoice={setInvoice}
-            />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left */}
+        <div className="space-y-6">
+          <CustomerForm
+            invoice={invoice}
+            setInvoice={setInvoice}
+          />
 
-            <ProductSearch
-              invoice={invoice}
-              setInvoice={setInvoice}
-            />
+          <ProductSearch
+            invoice={invoice}
+            setInvoice={setInvoice}
+          />
 
-            <BillItemsTable
-              invoice={invoice}
-              setInvoice={setInvoice}
-            />
+          <BillItemsTable
+            invoice={invoice}
+            setInvoice={setInvoice}
+          />
 
-            <InvoiceSummary
-              invoice={invoice}
-              setInvoice={setInvoice}
-            />
-          </div>
-
-          {/* Right */}
-          <InvoicePreview 
-            invoice={invoice} 
-            shop={shop}
-            invoiceNumber={nextInvoiceNumber}
-            onSave={handleSave} 
-            onPrint={handleSave}
-            isSaving={isSaving} 
+          <InvoiceSummary
+            invoice={invoice}
+            setInvoice={setInvoice}
           />
         </div>
+
+        {/* Right */}
+        <InvoicePreview 
+          invoice={invoice} 
+          shop={shop}
+          invoiceNumber={nextInvoiceNumber}
+          onSave={handleSave} 
+          onPrint={handleSave}
+          isSaving={isSaving} 
+        />
       </div>
     </div>
   );

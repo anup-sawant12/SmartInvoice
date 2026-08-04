@@ -6,8 +6,12 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Shop from "./pages/Shop.jsx";
 import Products from "./pages/Products";
 import Invoice from "./pages/Invoice";
+import Invoices from "./pages/Invoices";
+import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
 
 import ProtectedRoute from "./routes/protectRoute.jsx";
+import DashboardLayout from "./layouts/DashboardLayout";
 
 function App() {
   return (
@@ -15,42 +19,22 @@ function App() {
       <Route path="/" element={<Register />} />
       <Route path="/login" element={<Login />} />
 
+      {/* Protected Routes inside Dashboard Layout */}
       <Route
-        path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
-
-      <Route
-        path="/shop"
-        element={
-          <ProtectedRoute>
-            <Shop />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-  path="/products"
-  element={
-    <ProtectedRoute>
-      <Products />
-    </ProtectedRoute>
-  }
-/>
-
-<Route
-  path="/invoice"
-  element={
-    <ProtectedRoute>
-      <Invoice />
-    </ProtectedRoute>
-  }
-/>
-
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/invoices" element={<Invoices />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/settings" element={<Settings />} />
+      </Route>
     </Routes>
   );
 }

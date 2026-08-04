@@ -111,10 +111,15 @@ const Products = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-8">
-        Product Management
-      </h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-extrabold text-neutral-800 tracking-tight">
+          Product Management
+        </h1>
+        <p className="text-neutral-500 mt-1 text-sm">
+          Add, update, and manage your inventory products.
+        </p>
+      </div>
 
       <ProductForm
         formData={formData}

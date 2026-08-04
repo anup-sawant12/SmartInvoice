@@ -84,33 +84,38 @@ const Shop = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">
+    <div className="space-y-6 max-w-2xl mx-auto">
+      <div>
+        <h1 className="text-3xl font-extrabold text-neutral-800 tracking-tight">
           Shop Profile
         </h1>
+        <p className="text-neutral-500 mt-1 text-sm">
+          Configure your shop information and branding details.
+        </p>
+      </div>
 
+      <div className="bg-white shadow-sm border border-neutral-200 rounded-2xl p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block mb-1 font-medium">Shop Name</label>
+            <label className="block mb-1 font-medium text-sm text-neutral-700">Shop Name</label>
             <input
               type="text"
               name="shopName"
               value={formData.shopName}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              className="w-full border border-neutral-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 text-sm"
               placeholder="Enter Shop Name"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">Address</label>
+            <label className="block mb-1 font-medium text-sm text-neutral-700">Address</label>
             <textarea
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              className="w-full border border-neutral-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 text-sm"
               rows="3"
               placeholder="Enter Address"
               required
@@ -118,38 +123,38 @@ const Shop = () => {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">Mobile</label>
+            <label className="block mb-1 font-medium text-sm text-neutral-700">Mobile</label>
             <input
               type="text"
               name="mobile"
               value={formData.mobile}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              className="w-full border border-neutral-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 text-sm"
               placeholder="Enter Mobile Number"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">GST Number</label>
+            <label className="block mb-1 font-medium text-sm text-neutral-700">GST Number</label>
             <input
               type="text"
               name="gstNumber"
               value={formData.gstNumber}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              className="w-full border border-neutral-200 rounded-xl p-3 focus:outline-none focus:border-blue-500 text-sm"
               placeholder="Enter GST Number"
             />
           </div>
 
           <div>
-            <label className="block mb-2 font-medium">Shop Logo</label>
+            <label className="block mb-2 font-medium text-sm text-neutral-700">Shop Logo</label>
 
             {preview && (
               <img
                 src={preview}
                 alt="Shop Logo"
-                className="h-28 w-28 object-cover rounded-lg border mb-3"
+                className="h-28 w-28 object-cover rounded-lg border border-neutral-200 mb-3"
               />
             )}
 
@@ -157,13 +162,13 @@ const Shop = () => {
               type="file"
               accept="image/*"
               onChange={handleLogoChange}
-              className="w-full"
+              className="w-full text-sm text-neutral-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm transition-all shadow-sm shadow-blue-100"
           >
             {isEdit ? "Update Shop" : "Create Shop"}
           </button>
