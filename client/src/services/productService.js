@@ -1,6 +1,12 @@
 import axios from "axios";
 
-const API = (import.meta.env.VITE_API_URL || "http://localhost:5000/api") + "/products";
+const getBaseURL = () => {
+  let url = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  url = url.replace(/\/+$/, "");
+  return url.endsWith("/api") ? url : url + "/api";
+};
+
+const API = getBaseURL() + "/products";
 
 const getToken = () => localStorage.getItem("token");
 

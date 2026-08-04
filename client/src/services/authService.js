@@ -1,7 +1,13 @@
 import axios from "axios";
 
+const getBaseURL = () => {
+  let url = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  url = url.replace(/\/+$/, "");
+  return url.endsWith("/api") ? url : url + "/api";
+};
+
 const API = axios.create({
-  baseURL: (import.meta.env.VITE_API_URL || "http://localhost:5000/api") + "/auth",
+  baseURL: getBaseURL() + "/auth",
 });
 
 export const register = (userData) => {
