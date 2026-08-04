@@ -41,7 +41,7 @@ https://smart-invoice-client.vercel.app/
 - bcryptjs
 
 **Database**
-- MySQL
+- MySQL(NEON)
 - Prisma ORM
 
 **Cloud & Deployment**
